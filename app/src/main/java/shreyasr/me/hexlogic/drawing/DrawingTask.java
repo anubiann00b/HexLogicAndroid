@@ -1,6 +1,5 @@
 package shreyasr.me.hexlogic.drawing;
 
-import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 import java.util.TimerTask;
@@ -24,13 +23,7 @@ public class DrawingTask extends TimerTask {
 
     @Override
     public void run() {
-        Canvas canvas = surfaceHolder.lockCanvas();
-        if (canvas != null) {
-            synchronized (game) {
-                game.update();
-                game.repaint(canvas);
-            }
-        }
-        surfaceHolder.unlockCanvasAndPost(canvas);
+        game.update();
+        game.repaint(surfaceHolder);
     }
 }

@@ -6,7 +6,7 @@ import android.graphics.Path;
 
 public class DrawableLibrary {
 
-    public static final int SIZE = 15;
+    public static final int SIZE = 60;
 
     public final static Paint STROKE;
     public final static Paint FILL_OFF;
@@ -19,7 +19,7 @@ public class DrawableLibrary {
 
     static {
         STROKE = new Paint();
-        STROKE.setColor(Color.parseColor("#FFFFFF"));
+        STROKE.setColor(Color.parseColor("#000000"));
         STROKE.setStyle(Paint.Style.STROKE);
 
         FILL_OFF = new Paint();
@@ -31,11 +31,14 @@ public class DrawableLibrary {
         FILL_ON.setStyle(Paint.Style.FILL);
 
         HEXAGON = new Path();
-        for (int i=0;i<6;i++) {
+        for (int i=0;i<=6;i++) {
             double angle = 2 * Math.PI / 6 * i;
             double px = SIZE * Math.cos(angle);
             double py = SIZE * Math.sin(angle);
-            HEXAGON.lineTo((float) px, (float) py);
+            if (i == 0)
+                HEXAGON.moveTo((float) px, (float) py);
+            else
+                HEXAGON.lineTo((float) px, (float) py);
         }
 
         XOR = new Path();

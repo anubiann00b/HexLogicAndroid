@@ -14,6 +14,7 @@ public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callb
 
     Timer drawingTimer;
     Game game = new Game();
+    SurfaceHolder surfaceHolder = null;
 
     public DrawingPanelView(Context context) {
         super(context);
@@ -24,6 +25,8 @@ public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callb
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         setWillNotDraw(false);
 
+        this.surfaceHolder = surfaceHolder;
+
         synchronized (game) {
             Canvas c = surfaceHolder.lockCanvas();
             game.init(c);
@@ -31,7 +34,7 @@ public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callb
         }
 
         drawingTimer = new Timer();
-        drawingTimer.schedule(new DrawingTask(surfaceHolder, game), 0, 500);
+        drawingTimer.schedule(new DrawingTask(surfaceHolder, game), 0, 200);
     }
 
     @Override
@@ -41,11 +44,13 @@ public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callb
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() != MotionEvent.ACTION_DOWN)
+            return false;
         float x = event.getX();
         float y = event.getY();
 
         synchronized (game) {
-            game.onClick(x, y);
+            game.onClick(x, y, surfaceHolder);
         }
 
         return true;
