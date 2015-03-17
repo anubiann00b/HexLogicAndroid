@@ -19,10 +19,10 @@ public class Game {
 
     Hex[][] map;
 
-    int size = 15;
+    final int size = DrawableLibrary.SIZE;
     int width = 0;
     int height = 0;
-    boolean firstInit = false;
+    boolean firstInit = true;
     boolean repaint = true;
 
     public void init(Canvas canvas) {

@@ -13,7 +13,7 @@ import shreyasr.me.hexlogic.Game;
 public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callback {
 
     Timer drawingTimer;
-    Game game;
+    Game game = new Game();
 
     public DrawingPanelView(Context context) {
         super(context);
