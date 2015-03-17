@@ -9,6 +9,7 @@ public class DrawableLibrary {
     public static final int SIZE = 60;
 
     public final static Paint STROKE;
+    public final static Paint STROKE_THICK;
     public final static Paint FILL_OFF;
     public final static Paint FILL_ON;
 
@@ -21,6 +22,11 @@ public class DrawableLibrary {
         STROKE = new Paint();
         STROKE.setColor(Color.parseColor("#000000"));
         STROKE.setStyle(Paint.Style.STROKE);
+
+        STROKE_THICK = new Paint();
+        STROKE_THICK.setColor(Color.parseColor("#000000"));
+        STROKE_THICK.setStrokeWidth(2);
+        STROKE_THICK.setStyle(Paint.Style.STROKE);
 
         FILL_OFF = new Paint();
         FILL_OFF.setColor(Color.parseColor("#AAAAAA"));

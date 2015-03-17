@@ -94,7 +94,7 @@ public class Game {
                     else // on
                         path = new Path(DrawableLibrary.ON);
                     path.offset((float) xPos, (float) yPos);
-                    canvas.drawPath(path, DrawableLibrary.STROKE);
+                    canvas.drawPath(path, DrawableLibrary.STROKE_THICK);
                 }
 
                 hex.repaint = false;
