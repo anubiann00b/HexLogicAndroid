@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import shreyasr.me.hexlogic.drawing.DrawingPanelView;
 
-
 public class MainActivity extends Activity {
 
     @Override

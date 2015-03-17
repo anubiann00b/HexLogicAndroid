@@ -2,12 +2,18 @@ package shreyasr.me.hexlogic.drawing;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.Timer;
+
+import shreyasr.me.hexlogic.Game;
+
 public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callback {
 
-    DrawingThread thread;
+    Timer drawingTimer;
+    Game game;
 
     public DrawingPanelView(Context context) {
         super(context);
@@ -15,29 +21,36 @@ public class DrawingPanelView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
         setWillNotDraw(false);
-        thread = new DrawingThread(this.getHolder(), this);
-        thread.start();
-    }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        synchronized (game) {
+            Canvas c = surfaceHolder.lockCanvas();
+            game.init(c);
+            surfaceHolder.unlockCanvasAndPost(c);
+        }
 
+        drawingTimer = new Timer();
+        drawingTimer.schedule(new DrawingTask(surfaceHolder, game), 0, 500);
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        thread.setRunning(false);
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        drawingTimer.cancel();
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+
+        synchronized (game) {
+            game.onClick(x, y);
+        }
+
+        return true;
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
 }
